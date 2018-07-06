@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" name="aaa">
+  <button value="submit" name="submit">submit</button>
+  <p></p>
+  <!-- promise demo -->
+  <!-- <script>
+    const getJson = function (url) {
+      const promise = new Promise((resolve, reject) => {
+        const handle = function () {
+          if (this.readyState !== 4) {
+            return;
+          }
+          if (this.status === 200) {
+            resolve(this.response);
+          } else {
+            reject(new Error(this.statusText));
+          }
+        }
+        const client = new XMLHttpRequest();
+        client.open('GET', url);
+        client.onreadystatechange = handle;
+        client.responseType = 'json';
+        client.setRequestHeader('Accept', 'appolication/json');
+        client.send();
+      });
+
+      return promise;
+    }
+    getJson('/download?value=123')
+      .then((res) => {
+      })
+      .catch((err) => { });
+
+  </script> -->
+  <!-- submit demo -->
+  <script>
+    var btn = document.querySelector('button');
+    btn.addEventListener('click', function () {
+      var value = document.querySelector('input').value;
+      ajax(value);
+    }, true);
+
+    function ajax(value) {
+      var xmlhttp;
+      if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+      } else {
+        xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+      }
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+          document.querySelector('p').innerHTML = xmlhttp.responseText;
+        }
+      }
+
+      // xmlhttp.open('POST', '/upload', true);
+      // xmlhttp.send(JSON.stringify({
+      //   value: value
+      // }));
+
+      xmlhttp.open('GET', 'http://localhost:4000/download?value='+value, true);
+      xmlhttp.send();
+    }
+  </script>
+</body>
+
+</html>

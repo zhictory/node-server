@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.html</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+  <script>
+    $.ajax({
+      url: 'http://localhost:4000/public/2.html',
+      success: function() {
+        console.log('123');
+      }
+    });
+    $(function() {
+      console.log('1');
+    });
+  </script>
+</body>
+</html>
