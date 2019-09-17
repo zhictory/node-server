@@ -10,7 +10,7 @@
 node server.1.js
 ```
 
-然后通过 [http://localhost:8080/index.html](http://localhost:8080/index.html) 访问页面。
+然后通过 [http://localhost:8080/public/index.html](http://localhost:8080/public/index.html) 访问页面。
 
 如果要调试跨域，就启动另一个服务器：
 
@@ -18,4 +18,4 @@ node server.1.js
 node server.2.js
 ```
 
-然后通过 [http://localhost:4000/index.html](http://localhost:8080/index.html) 访问页面。
+然后通过 [http://localhost:8080/public/index.html](http://localhost:8080/public/index.html) 访问页面。
