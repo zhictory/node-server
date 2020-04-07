@@ -14,5 +14,8 @@
   "license": "ISC",
   "devDependencies": {
     "express": "^4.16.3"
+  },
+  "dependencies": {
+    "rdf-snippet": "^2.0.2"
   }
 }

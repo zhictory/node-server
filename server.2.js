@@ -62,9 +62,8 @@ var handle = {
       response.end(data);
     });
   },
-  // 2 页面
-  '/public/2.html': function (response, postData) {
-    var pathname = __dirname + '/public/2.html';
+  '/public/ajax.html': function (response, postData) {
+    var pathname = __dirname + '/public/ajax.html';
     fs.readFile(pathname, function (err, data) {
       response.writeHead(200, { 'Content-Type': 'text/html', 'Access-Control-Allow-Origin': '*' });
       response.end(data);

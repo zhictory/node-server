@@ -1,37 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>2.html</title>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-</head>
-<body>
-  <script>
-    $.ajax({
-      success: function() {
-        console.log('123');
-      }
-    });
-    $.ajax({
-      success: function() {
-        console.log('123');
-      }
-    });
-    $.ajax({
-      success: function() {
-        console.log('123');
-      }
-    });
-    $.ajax({
-      success: function() {
-        console.log('123');
-      }
-    });
-    $(function() {
-      console.log('1');
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>2.html</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  </head>
+  <body>
+    <script>
+      $.ajax({
+        url: "http://localhost:4000/public/ajax.html",
+        success: (res) => {
+          document.body.innerHTML = res;
+        }
+      });
+    </script>
+  </body>
 </html>

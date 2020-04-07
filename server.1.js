@@ -5,9 +5,11 @@
  * 当请求被服务器接收并通过路由传递之后，需要可以对其进行处理，因此我们需要最终的请求处理程序
  * 我们需要从html文件里提取数据以及展示服务器传入的数据，因此需要将html和服务器结合起来
  */
-var fs = require('fs');
-var http = require('http');
-var url = require('url');
+const fs = require('fs');
+const http = require('http');
+const url = require('url');
+const path = require('path');
+const getUrlParam = require('rdf-snippet/script/getUrlParam');
 /**
  * 路由
  * @param {Function} handle 请求处理程序
@@ -31,11 +33,11 @@ function route(handle, pathname, response, postData) {
  */
 function start(route, handle) {
   function onRequest(request, response) {
-    var postData = '';
-    var pathname = url.parse(request.url).pathname;
+    let postData = '';
+    const pathname = url.parse(request.url).pathname;
     switch (request.method) {
       case 'GET':
-        postData += url.parse(request.url).query;
+        postData += `?${url.parse(request.url).query}`;
         request.setEncoding('utf8');
         route(handle, pathname, response, postData);
         break;
@@ -54,31 +56,68 @@ function start(route, handle) {
   console.log('Server has started');
 }
 // 请求处理程序
-var handle = {
+const handle = {
   // index 页面
   '/public/index.html': function (response, postData) {
-    var pathname = __dirname + '/public/index.html';
+    const pathname = __dirname + '/public/index.html';
     fs.readFile(pathname, function (err, data) {
       response.end(data);
     });
   },
   // 1 页面
   '/public/1.html': function (response, postData) {
-    var pathname = __dirname + '/public/1.html';
+    const pathname = __dirname + '/public/1.html';
+    fs.readFile(pathname, function (err, data) {
+      response.end(data);
+    });
+  },
+  // 2 页面
+  '/public/2.html': function (response, postData) {
+    const pathname = __dirname + '/public/2.html';
+    fs.readFile(pathname, function (err, data) {
+      response.end(data);
+    });
+  },
+  // 同步方式的下载
+  '/file/test.xlsx': function (response, postData) {
+    const pathname = __dirname + '/file/test.xlsx';
     fs.readFile(pathname, function (err, data) {
       response.end(data);
     });
   },
   // download 接口
   '/download': function (response, postData) {
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.write(JSON.stringify({
-      code: 200,
-      data: {
-        'time': new Date().toLocaleString("en-US")
+    const dir = getUrlParam(postData, 'dir');
+    const fileName = getUrlParam(postData, 'filename');
+    const file = __dirname + dir + fileName;
+    fs.access(file, fs.constants.F_OK, (err) => {
+      console.log(`${file} ${err ? 'does not exist' : 'exists'}`);
+      if (err) {
+        response.writeHead(404, { "content-type": "text/html" });
+        response.write(JSON.stringify({
+          code: 404,
+          data: {
+            'msg': 'file does not exist!'
+          }
+        }));
+        response.end();
+      } else {
+        stats = fs.statSync(file);
+        response.writeHead(200, {
+          "Content-Description": "File Transfer",
+          "Content-Type": "application/octet-stream",
+          "Content-Disposition": "attachment;filename=" + encodeURI(fileName),
+          'Content-Length': stats.size
+        });
+        // 两种方式返回二进制流（Node 层只能返回二进制流）
+        // 第一种
+        fs.createReadStream(file).pipe(response);
+        // 第二种
+        // fs.readFile(file, function (err, data) {
+        //   response.end(data);
+        // });
       }
-    }));
-    response.end();
+    });
   },
   // upload 接口
   '/upload': function (response, postData) {
