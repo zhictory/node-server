@@ -291,9 +291,9 @@ raw-body@2.4.0:
     unpipe "1.0.0"
 
 rdf-snippet@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/rdf-snippet/-/rdf-snippet-2.0.2.tgz#50d1c23bc1d7cecf80bd5fbcada3cbe84a227c9a"
-  integrity sha512-fnsaJjf0ZkK2k2NRqdEjyTTNvQKqINsBWeI5JJH5TgOXsrgYlAWesn1o/LnjpAR6GOvIvSzjZAQj3s6j73Ls7A==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/rdf-snippet/-/rdf-snippet-2.0.3.tgz#f08c0edf3efa3bd9027998a8ada14984a70d91ae"
+  integrity sha512-ivggxLWIdAM5s5S33vmiQyOQPu53lLy8PkVG8s8O96WtHg/IlPaEtL6XtlGE9GqEsltq+V9eaJDDCfaQ/Q8/hg==
 
 safe-buffer@5.1.2:
   version "5.1.2"
