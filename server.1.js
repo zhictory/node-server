@@ -104,6 +104,7 @@ const handle = {
       } else {
         stats = fs.statSync(file);
         response.writeHead(200, {
+          "Access-Control-Expose-Headers": "Content-Disposition",
           "Access-Control-Allow-Origin": "*",
           "Content-Description": "File Transfer",
           "Content-Type": "application/octet-stream",
