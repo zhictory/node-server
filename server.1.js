@@ -87,7 +87,7 @@ const handle = {
   },
   // download 接口
   '/download': function (response, postData) {
-    const dir = getUrlParam(postData, 'dir');
+    const dir = getUrlParam(postData, 'dir').replace(/\\/g, '/');
     const fileName = getUrlParam(postData, 'filename');
     const file = __dirname + dir + fileName;
     fs.access(file, fs.constants.F_OK, (err) => {
@@ -126,6 +126,22 @@ const handle = {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.write('You have sent: ' + JSON.parse(postData).value);
     response.end();
+  },
+  '/reverse_geocoding': (response, postData) => {
+    http.get('http://api.map.baidu.com/reverse_geocoding/v3/?ak=qRfBzSccDs1SuPLPYnSTBo8mrMNOPG1y&output=json&coordtype=wgs84ll&location=-6.210647,106.845236', (resp) => {
+      let data = '';
+      // A chunk of data has been recieved.
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+      // The whole response has been received. Print out the result.
+      resp.on('end', () => {
+        console.log(JSON.parse(data));
+        console.log(JSON.parse(data).result.formatted_address);
+      });
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
+    });
   }
 };
 

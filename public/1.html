@@ -1,66 +1,72 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>1.html</title>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/zhictory/taurus@master/script/createXHR.js"></script>
-  </head>
-  <body>
-    <div><input type="button" value="download" /></div>
-    <script>
-      document.querySelector("[type=button]").addEventListener("click", () => {
-        // 两种方式获取二进制流文件
-        // 第一种 Ajax
-        $.ajax({
-          url: "/download?dir=\\file\\&filename=test.xlsx",
-          xhrFields: {
-            responseType: "arraybuffer", // 关键
-          },
-          success: (res, status, jqXHR) => {
-            const blob = new Blob([res], {
-              type:
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            });
-            const objectURL = URL.createObjectURL(blob); // 关键
-            const a = document.createElement("a");
-            a.href = objectURL;
-            a.download = jqXHR
-              .getResponseHeader("content-disposition")
-              .match(/filename=(.*)/i)[1];
-            a.click();
-            URL.revokeObjectURL(objectURL);
-          },
-        });
-        // 第二种 原生实现
-        // var xhr = createXHR();
-        // xhr.onreadystatechange = function () {
-        //   if (xhr.readyState === 4) {
-        //     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-        //       debugger;
-        //       const blob = new Blob([xhr.response], {
-        //         type:
-        //           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        //       });
-        //       const objectURL = URL.createObjectURL(blob); // 关键
-        //       const a = document.createElement("a");
-        //       a.href = objectURL;
-        //       a.download = xhr
-        //         .getResponseHeader("content-disposition")
-        //         .match(/filename=(.*)/i)[1];
-        //       a.click();
-        //       URL.revokeObjectURL(objectURL);
-        //     } else {
-        //       console.log("Request was unsuccessful" + xhr.status);
-        //     }
-        //   }
-        // };
-        // xhr.responseType = "arraybuffer";
-        // xhr.open("get", "/download?dir=\\file\\&filename=test.xlsx", true);
-        // xhr.send(null);
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>1.html</title>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/zhictory/taurus@master/script/createXHR.js"></script>
+</head>
+
+<body>
+  <div><input type="button" value="download" /></div>
+  <script>
+    $.ajax({
+      url: "/reverse_geocoding",
+    });
+    document.querySelector("[type=button]").addEventListener("click", () => {
+      // 两种方式获取二进制流文件
+      // 第一种 Ajax
+      $.ajax({
+        url: "/download?dir=\\file\\&filename=test.xlsx",
+        xhrFields: {
+          responseType: "arraybuffer", // 关键
+        },
+        success: (res, status, jqXHR) => {
+          const blob = new Blob([res], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          });
+          const objectURL = URL.createObjectURL(blob); // 关键
+          const a = document.createElement("a");
+          a.href = objectURL;
+          a.download = jqXHR
+            .getResponseHeader("content-disposition")
+            .match(/filename=(.*)/i)[1];
+          a.click();
+          URL.revokeObjectURL(objectURL);
+        },
       });
-    </script>
-  </body>
+      // 第二种 原生实现
+      // var xhr = createXHR();
+      // xhr.onreadystatechange = function () {
+      //   if (xhr.readyState === 4) {
+      //     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+      //       debugger;
+      //       const blob = new Blob([xhr.response], {
+      //         type:
+      //           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      //       });
+      //       const objectURL = URL.createObjectURL(blob); // 关键
+      //       const a = document.createElement("a");
+      //       a.href = objectURL;
+      //       a.download = xhr
+      //         .getResponseHeader("content-disposition")
+      //         .match(/filename=(.*)/i)[1];
+      //       a.click();
+      //       URL.revokeObjectURL(objectURL);
+      //     } else {
+      //       console.log("Request was unsuccessful" + xhr.status);
+      //     }
+      //   }
+      // };
+      // xhr.responseType = "arraybuffer";
+      // xhr.open("get", "/download?dir=\\file\\&filename=test.xlsx", true);
+      // xhr.send(null);
+    });
+  </script>
+</body>
+
 </html>
