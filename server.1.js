@@ -128,7 +128,9 @@ const handle = {
     response.end();
   },
   '/reverse_geocoding': (response, postData) => {
-    http.get('http://api.map.baidu.com/reverse_geocoding/v3/?ak=qRfBzSccDs1SuPLPYnSTBo8mrMNOPG1y&output=json&coordtype=wgs84ll&location=-6.210647,106.845236', (resp) => {
+    const lng = getUrlParam(postData, 'lng');
+    const lat = getUrlParam(postData, 'lat');
+    http.get(`http://api.map.baidu.com/reverse_geocoding/v3/?ak=qRfBzSccDs1SuPLPYnSTBo8mrMNOPG1y&output=json&coordtype=wgs84ll&location=${lng},${lat}`, (resp) => {
       let data = '';
       // A chunk of data has been recieved.
       resp.on('data', (chunk) => {
@@ -136,8 +138,9 @@ const handle = {
       });
       // The whole response has been received. Print out the result.
       resp.on('end', () => {
-        console.log(JSON.parse(data));
-        console.log(JSON.parse(data).result.formatted_address);
+        console.log(data);
+        response.writeHead(200, { 'Content-Type': 'text/json' });
+        response.end(data);
       });
     }).on("error", (err) => {
       console.log("Error: " + err.message);

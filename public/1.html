@@ -15,6 +15,10 @@
   <script>
     $.ajax({
       url: "/reverse_geocoding",
+      data: {
+        lng: -6.210647,
+        lat: 106.845236
+      }
     });
     document.querySelector("[type=button]").addEventListener("click", () => {
       // 两种方式获取二进制流文件
